@@ -24,18 +24,94 @@ const Square = ({ children, isSelected, updateBoard, index }) => {
   )
 }
 
+const winner_combos = [
+  [0, 1, 2],
+  [2, 1, 0],
+  [0, 3, 6],
+  [6, 3, 0],
+  [6, 7, 8],
+  [8, 7, 6],
+  [8, 5, 2],
+  [2, 5, 8],
+  [3, 4, 5],
+  [5, 4, 3],
+  [1, 4, 7],
+  [7, 4, 1],
+  [0, 4, 8],
+  [8, 4, 0],
+  [2, 4, 6],
+  [6, 4, 2]
+]
+
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null))
-
   const [turn, setTurn] = useState(TURNS.X)
+  const [winner, setWinner] = useState(null)
+  const [pointsX, setPointsX] = useState(0)
+  const [pointsO, setPointsO] = useState(0)
+
+  const checkWinner = (boardToCheck) => {
+
+    for (const combo of winner_combos) {
+      const [a, b, c] = combo
+      if (boardToCheck[a] &&
+        boardToCheck[a] === boardToCheck[b] &&
+        boardToCheck[a] === boardToCheck[c]
+      ) {
+        return boardToCheck[a]
+      }
+    }
+
+    return null
+  }
+
 
   const updateBoard = (index) => {
+
+
+    if (board[index] || winner) return
     const newBoard = [...board]
     newBoard[index] = turn
+    setBoard(newBoard)
 
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
+
+    const newWinner = checkWinner(newBoard)
+    if (newWinner) {
+      setWinner(newWinner)
+    }
+    if (newWinner === TURNS.X) {
+      const newPointsX = pointsX + 1
+      setPointsX(newPointsX)
+      console.log(newPointsX)
+      return newPointsX
+
+    }
+    if (newWinner === TURNS.O) {
+      const newPointsO = pointsO + 1
+      setPointsO(newPointsO)
+      console.log(newPointsO)
+      return newPointsO
+    }
+
   }
+
+  const handleRestart = () => {
+    setBoard(Array(9).fill(null))
+    setTurn(TURNS.X)
+    setWinner(null)
+
+  }
+
+  const handleRestartAll = () => {
+    setBoard(Array(9).fill(null))
+    setTurn(TURNS.X)
+    setWinner(null)
+    setPointsX(0)
+    setPointsO(0)
+  }
+
 
   return (
     <main className='board'>
@@ -59,6 +135,50 @@ function App() {
         <Square isSelected={turn === TURNS.X}>{TURNS.X}</Square>
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
+
+      <section>
+        {
+          winner !== null && (
+            <section className='winner'>
+              {
+                pointsX === 3 ?
+                  <div className='text'>
+                    {winner + ' gana el juego'}
+                    <button onClick={handleRestartAll}>Reiniciar</button>
+                  </div>
+                  :
+                  pointsO === 3 ?
+                    <div className='text'>
+                      {winner + ' gana el juego'}
+                      <button onClick={handleRestartAll}>Reiniciar</button>
+                    </div>
+                    :
+                    <div className='text'>
+                      <h2>
+                        {winner === false
+                          ? 'Empate'
+                          : 'Ganó ' + winner
+                        }
+                      </h2>
+
+
+                      <header className='win'>
+                        {winner && <Square>{winner}</Square>}
+                      </header>
+                      <button onClick={handleRestart}>Reiniciar</button>
+                    </div>
+              }
+            </section>
+          )
+        }
+      </section>
+
+      <section>
+        <h3>Puntos de jugadores: </h3>
+        <span>Puntos X = {pointsX}</span> <br />
+        <span>Puntos O = {pointsO}</span>
+      </section>
+
     </main>
   )
 }
