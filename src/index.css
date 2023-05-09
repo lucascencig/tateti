@@ -67,6 +67,7 @@ body {
 .turn {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 15px auto;
   width: fit-content;
   position: relative;
@@ -83,7 +84,14 @@ body {
 
 .square.is-selected {
   color: #fff;
-  background: #09f;
+  background: rgb(107, 107, 107);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 10%;
+  padding: 16px 16px;
+  transform: scale(1.2);
 }
 
 .winner {
@@ -128,4 +136,41 @@ body {
   place-items: center;
   cursor: pointer;
   font-size: 48px;
+}
+
+.pointsX {
+  font-size: 20px;
+  color: rgb(184, 49, 49);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.pointsO {
+  font-size: 20px;
+  color: rgb(88, 74, 221);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.winner .textwin {
+  background: #111;
+  height: 300px;
+  width: 320px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.points {
+  font-weight: 700;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+span {
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 700;
 }

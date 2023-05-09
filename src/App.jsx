@@ -1,11 +1,11 @@
-
+import confetti from 'canvas-confetti'
 import { useState } from 'react'
 import './App.css'
 
 
 const TURNS = {
-  X: 'x',
-  O: 'o'
+  X: '🟥',
+  O: '🟦'
 }
 
 
@@ -79,6 +79,7 @@ function App() {
 
     const newWinner = checkWinner(newBoard)
     if (newWinner) {
+      confetti()
       setWinner(newWinner)
     }
     if (newWinner === TURNS.X) {
@@ -142,14 +143,17 @@ function App() {
             <section className='winner'>
               {
                 pointsX === 3 ?
-                  <div className='text'>
-                    {winner + ' gana el juego'}
+                  <div className='textwin'>
+                    <h2> {'¡' + winner + ' Gana el juego!'}</h2>
+
                     <button onClick={handleRestartAll}>Reiniciar</button>
+
                   </div>
                   :
                   pointsO === 3 ?
-                    <div className='text'>
-                      {winner + ' gana el juego'}
+                    <div className='textwin'>
+                      <h2> {'¡ ' + winner + ' Gana el juego!'}</h2>
+                      {confetti()}
                       <button onClick={handleRestartAll}>Reiniciar</button>
                     </div>
                     :
@@ -174,9 +178,9 @@ function App() {
       </section>
 
       <section>
-        <h3>Puntos de jugadores: </h3>
-        <span>Puntos X = {pointsX}</span> <br />
-        <span>Puntos O = {pointsO}</span>
+        <h3 className='points'>Puntos de jugadores: </h3>
+        <span>Puntos 🟥 = <p className='pointsX'>{pointsX}</p> </span> <br />
+        <span>Puntos 🟦 = <p className='pointsO'>{pointsO}</p> </span>
       </section>
 
     </main>
