@@ -82,6 +82,7 @@ function App() {
       confetti()
       setWinner(newWinner)
     }
+
     if (newWinner === TURNS.X) {
       const newPointsX = pointsX + 1
       setPointsX(newPointsX)
@@ -117,6 +118,9 @@ function App() {
   return (
     <main className='board'>
       <h1>Ta-Te-Ti</h1>
+      <section>
+        <button onClick={handleRestart}>Reiniciar</button>
+      </section>
       <section className='game'>
         {
           board.map((_, index) => {
@@ -158,20 +162,16 @@ function App() {
                     </div>
                     :
                     <div className='text'>
-                      <h2>
-                        {winner === false
-                          ? 'Empate'
-                          : 'Ganó ' + winner
-                        }
-                      </h2>
-
 
                       <header className='win'>
                         {winner && <Square>{winner}</Square>}
                       </header>
                       <button onClick={handleRestart}>Reiniciar</button>
                     </div>
+
               }
+
+
             </section>
           )
         }
